@@ -3,7 +3,7 @@
     <el-container>
       <el-header>
         <div class="header_wrap">
-          <img src="../assets/Logo.png" alt="" />
+          <img src="../assets/logo.png" alt="" />
           <h1>311网上竞拍系统</h1>
         </div>
         <div class="btn_group" v-if="!isLogin">
@@ -28,7 +28,7 @@
         <el-menu :default-active="activeIndex" mode="horizontal" router>
           <el-menu-item index="/main">首页</el-menu-item>
           <el-menu-item index="/category">分类</el-menu-item>
-          <el-menu-item index="/upload">物品上传</el-menu-item>
+          <el-menu-item index="/goods">物品管理</el-menu-item>
           <el-menu-item index="4">处理中心</el-menu-item>
         </el-menu>
         <!-- 页面主要内容 -->

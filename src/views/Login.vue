@@ -78,9 +78,10 @@ export default {
           this.$message.success("登录成功");
           let token = "Bearer" + res.data.auth;
           window.sessionStorage.setItem("token", token);
-          let { avatarUrl } = res.data.user;
+          let { avatarUrl, id } = res.data.user;
+          window.sessionStorage.setItem("vipId", id);
           window.sessionStorage.setItem("avatarUrl", avatarUrl);
-          this.$router.push("/home")
+          this.$router.push("/home");
         }
       });
     },
@@ -118,7 +119,7 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 35px;
+    padding: 50px;
     border-radius: 10px;
     box-shadow: 0 0 5px #ccc;
     opacity: 0.8;

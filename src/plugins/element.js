@@ -19,6 +19,10 @@ import { CarouselItem } from "element-ui";
 import { Image } from "element-ui";
 import { Avatar } from "element-ui";
 import { Card } from "element-ui";
+import { Cascader } from "element-ui";
+import { Row } from "element-ui";
+import { Col } from "element-ui";
+import { Dialog } from "element-ui";
 
 Vue.prototype.$message = Message;
 
@@ -41,4 +45,7 @@ Vue.use(CarouselItem);
 Vue.use(Image);
 Vue.use(Avatar);
 Vue.use(Card);
-
+Vue.use(Cascader);
+Vue.use(Row);
+Vue.use(Col);
+Vue.use(Dialog);
