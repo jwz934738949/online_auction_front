@@ -26,10 +26,13 @@
       <el-main>
         <!-- 导航栏 -->
         <el-menu :default-active="activeIndex" mode="horizontal" router>
-          <el-menu-item index="/main">首页</el-menu-item>
-          <el-menu-item index="/category">分类</el-menu-item>
-          <el-menu-item index="/goods">物品管理</el-menu-item>
-          <el-menu-item index="4">处理中心</el-menu-item>
+          <el-menu-item
+            v-for="(item, index) in indexList"
+            :key="index"
+            :index="item.index"
+            @click="saveNavPath(item.index)"
+            >{{ item.title }}</el-menu-item
+          >
         </el-menu>
         <!-- 页面主要内容 -->
         <el-card>
@@ -47,9 +50,18 @@ export default {
       activeIndex: "/main",
       isLogin: false,
       avatarUrl: "",
+      // 保存导航栏相应的跳转路径
+      indexList: [
+        { title: "首页", index: "/main" },
+        { title: "分类", index: "/category" },
+        { title: "商品管理", index: "/goods" },
+        { title: "1234", index: "/m123" },
+      ],
     };
   },
   created() {
+    this.activeIndex =
+      window.sessionStorage.getItem("activePath") || this.activeIndex;
     // 判断当前是否为已登录的状态
     let token = window.sessionStorage.getItem("token");
     if (token) {
@@ -68,6 +80,11 @@ export default {
     // 注册按钮
     registerVip() {
       this.$router.push("/register");
+    },
+    // 保存当前路径
+    saveNavPath(index) {
+      this.activeIndex = index;
+      window.sessionStorage.setItem("activePath", index);
     },
   },
 };

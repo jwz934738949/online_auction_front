@@ -8,7 +8,7 @@ import "nprogress/nprogress.css";
 
 Vue.config.productionTip = false;
 
-axios.defaults.baseURL = "http://auction.redarm.cn/api/"
+axios.defaults.baseURL = "http://auction.redarm.cn/api/";
 
 // 显示右上角螺旋加载提示
 NProgress.configure({ showSpinner: false });
@@ -17,6 +17,10 @@ NProgress.configure({ showSpinner: false });
 axios.interceptors.request.use((config) => {
   // 将进度条插件打开
   NProgress.start();
+  // 添加token值
+  if (window.sessionStorage.getItem("token")) {
+    config.headers.token = window.sessionStorage.getItem("token");
+  }
   return config;
 });
 

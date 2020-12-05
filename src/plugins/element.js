@@ -23,6 +23,10 @@ import { Cascader } from "element-ui";
 import { Row } from "element-ui";
 import { Col } from "element-ui";
 import { Dialog } from "element-ui";
+import { Table } from "element-ui";
+import { TableColumn } from "element-ui";
+import { Pagination } from "element-ui";
+import { Tag } from "element-ui";
 
 Vue.prototype.$message = Message;
 
@@ -49,3 +53,7 @@ Vue.use(Cascader);
 Vue.use(Row);
 Vue.use(Col);
 Vue.use(Dialog);
+Vue.use(Table);
+Vue.use(TableColumn);
+Vue.use(Pagination);
+Vue.use(Tag);
