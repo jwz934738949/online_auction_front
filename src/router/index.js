@@ -5,6 +5,7 @@ const Login = () => import("../views/Login");
 const Register = () => import("../views/Register");
 const Main = () => import("../views/Main");
 const Goods = () => import("../views/Goods");
+const Category = () => import("../views/Category");
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,7 @@ const routes = [
     children: [
       { path: "/main", component: Main },
       { path: "/goods", component: Goods },
+      { path: "/category", component: Category },
     ],
   },
   {
