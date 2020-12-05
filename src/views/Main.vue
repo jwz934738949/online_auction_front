@@ -27,11 +27,57 @@
         ></el-image>
       </el-carousel-item>
     </el-carousel>
+    <div class="main_content" v-for="item in goodsTypeList" :key="item.id">
+      <div class="title">{{ item.name }}</div>
+      <goods-list :goods-id="item.id">12345</goods-list>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+import GoodsList from "../components/GoodsList/GoodsList";
+
+export default {
+  data() {
+    return {
+      // 保存获取的第一分类数据
+      goodsTypeList: [],
+    };
+  },
+  components: {
+    GoodsList,
+  },
+  created() {
+    this.getGoodsType();
+  },
+  methods: {
+    // 获取相应的分类数据
+    getGoodsByGoodsId() {},
+
+    // 展示所有第一分类数据
+    async getGoodsType() {
+      const { data: res } = await this.$http.request({
+        url: "back/goods_type/showGoodsType",
+        method: "post",
+      });
+      if (res.code !== 200) {
+        return this.$message.error(res.message);
+      }
+      // console.log(res);
+      this.goodsTypeList = res.data;
+    },
+  },
+};
 </script>
 
-<style></style>
+<style lang="less" scoped>
+.main_content {
+  .title {
+    text-align: center;
+    color: #000;
+    font-size: 25px;
+    padding: 10px;
+    border-bottom: 2px dashed blue;
+  }
+}
+</style>
