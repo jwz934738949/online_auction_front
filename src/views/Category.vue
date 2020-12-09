@@ -29,7 +29,6 @@
         <div class="img_wrap">
           <img :src="item.image" alt="" />
         </div>
-
         <div class="goods_content">
           <div class="price_name">￥{{ item.auctionPrice }}</div>
           <div class="name_content">
@@ -38,6 +37,18 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="footer">
+      <!-- 分页内容 -->
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :page-size="20"
+        :total="total"
+        :current-page="pageStart"
+        @current-change="pageStartChanged"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -50,6 +61,7 @@ export default {
       goodsId: 1,
       pageStart: 1,
       pageSize: 20,
+      total: 0,
       // 保存商品数据数组
       goodsList: [],
       valueSelect: [],
@@ -78,23 +90,26 @@ export default {
       if (res.code !== 200) {
         return this.$message.error(res.message);
       }
+      this.total = res.data.总数;
       this.goodsList = res.data.goodsList;
     },
 
     // 查询第二分类的商品数据
     async getSecCategory() {
       const { data: res } = await this.$http.request({
-        url: "front/goods/getGoodsByGoodsTypeId",
+        url: "front/goods/showGoodsBySecondType",
         method: "post",
         data: {
-          name: "",
-          goodsTypeId: this.goodsId,
+          id: this.goodsId,
+          pageSize: this.pageSize,
+          pageStart: this.pageStart,
         },
       });
       if (res.code !== 200) {
         return this.$message.error(res.message);
       }
-      this.goodsList = res.data;
+      this.total = res.data.总数;
+      this.goodsList = res.data.goodsList;
     },
 
     // 根据商品名称进行查询
@@ -157,14 +172,30 @@ export default {
       }
       return null;
     },
+
     // 获取二级分类id
     getGoodsSecondTypeId() {
+      if (this.pageStart > 1) {
+        this.pageStart = 1;
+      }
       if (this.valueSelect.length === 1) {
         this.goodsId = this.valueSelect[0];
         this.getCategory();
       } else {
         this.goodsId = this.valueSelect[1] - 1000;
         this.getSecCategory();
+      }
+    },
+
+    // 页码发生改变
+    pageStartChanged(pageNum) {
+      this.pageStart = pageNum;
+      if (this.valueSelect.length === 2) {
+        this.goodsId = this.valueSelect[1] - 1000;
+        this.getSecCategory();
+      } else {
+        this.goodsId = this.valueSelect[0] || 1;
+        this.getCategory();
       }
     },
   },
@@ -240,5 +271,12 @@ export default {
       }
     }
   }
+}
+
+.footer {
+  padding: 15px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 </style>
