@@ -6,6 +6,7 @@ const Register = () => import("../views/Register");
 const Main = () => import("../views/Main");
 const Goods = () => import("../views/Goods");
 const Category = () => import("../views/Category");
+const Mine = () => import("../views/Mine");
 
 Vue.use(VueRouter);
 
@@ -22,6 +23,7 @@ const routes = [
       { path: "/main", component: Main },
       { path: "/goods", component: Goods },
       { path: "/category", component: Category },
+      { path: "/mine", component: Mine },
     ],
   },
   {
@@ -42,15 +44,15 @@ router.beforeEach((to, from, next) => {
   // to代表要去哪个路径
   // from代表从哪个路径来
   // next代表跳转 next() 直接跳转 next('/xxx') 强制跳转到该路径
-  if (to.path !== '/goods') {
-    return next()
+  if (to.path !== "/goods") {
+    return next();
   }
   // 获取token值
-  const tokenStr = window.sessionStorage.getItem('token')
+  const tokenStr = window.sessionStorage.getItem("token");
   if (!tokenStr) {
-    return next('/login')
+    return next("/login");
   }
-  next()
-})
+  next();
+});
 
 export default router;

@@ -111,6 +111,7 @@ export default {
         return this.$message.error(res.message);
       }
       this.goodsList = res.data;
+      this.goodsName = "";
     },
 
     // 获取分类类别数据

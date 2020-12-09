@@ -20,7 +20,15 @@
         </div>
         <div class="isLogin_wrap" v-else>
           <el-avatar shape="square" :size="50" :src="avatarUrl"></el-avatar>
-          <el-button type="danger">个人中心</el-button>
+          <el-button type="danger" @click="$router.push('/mine')"
+            >个人中心</el-button
+          >
+          <el-button
+            type="info"
+            @click="logout"
+            circle
+            icon="el-icon-close"
+          ></el-button>
         </div>
       </el-header>
       <el-main>
@@ -77,14 +85,22 @@ export default {
     loginVip() {
       this.$router.push("/login");
     },
+
     // 注册按钮
     registerVip() {
       this.$router.push("/register");
     },
+
     // 保存当前路径
     saveNavPath(index) {
       this.activeIndex = index;
       window.sessionStorage.setItem("activePath", index);
+    },
+
+    // 退出登录
+    logout() {
+      window.sessionStorage.clear();
+      this.$router.go(0);
     },
   },
 };
@@ -120,7 +136,7 @@ export default {
   }
 
   .isLogin_wrap {
-    width: 15%;
+    width: 18%;
     display: flex;
     justify-content: space-around;
     align-items: center;
