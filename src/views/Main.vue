@@ -29,7 +29,7 @@
     </el-carousel>
     <div class="main_content" v-for="item in goodsTypeList" :key="item.id">
       <div class="title">{{ item.name }}</div>
-      <goods-list :goods-id="item.id">12345</goods-list>
+      <goods-list :goods-id="item.id"></goods-list>
     </div>
   </div>
 </template>
