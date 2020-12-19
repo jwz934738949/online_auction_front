@@ -130,6 +130,47 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button
+            type="info"
+            size="small"
+            @click="showConfigDialog(scope.row.id)"
+            >竞拍配置</el-button
+          >
+          <el-dialog
+            title="物品竞拍配置"
+            :visible.sync="showConfigDialogVisible"
+            width="45%"
+          >
+            <el-form
+              :model="configForm"
+              :rules="configFormRules"
+              ref="configFormRef"
+              label-width="100px"
+            >
+              <el-form-item label="起拍金额" prop="bond">
+                <el-input type="number" v-model="configForm.bond"></el-input>
+              </el-form-item>
+              <el-form-item label="竞拍时间">
+                <el-date-picker
+                  v-model="timeRange"
+                  type="datetimerange"
+                  range-separator="至"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
+                  align="right"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  @blur="timeChanged"
+                >
+                </el-date-picker>
+              </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="showConfigDialogVisible = false"
+                >取 消</el-button
+              >
+              <el-button type="primary" @click="configGoods">确 定</el-button>
+            </span>
+          </el-dialog>
+          <el-button
             type="primary"
             round
             icon="el-icon-edit"
@@ -275,10 +316,31 @@ export default {
           { required: true, message: "请选择商品类别", trigger: "blur" },
         ],
       },
+      // 保存商品竞拍配置表单
+      configForm: {
+        bond: "",
+        goodsId: 0,
+        startTime: "",
+        endTime: "",
+      },
+      configFormRules: {
+        bond: [
+          { required: true, message: "请输入起拍价格", trigger: "blur" },
+          {
+            min: 2,
+            max: 8,
+            message: "起拍价格在2 - 8位数之间",
+            trigger: "blur",
+          },
+        ],
+      },
+      // 获取开始时间与结束时间数组数据
+      timeRange: [],
       // 显示物品上传对话框的显示与隐藏
       insertGoodsDialogVisible: false,
       deleteGoodsDialogVisible: false,
       updateGoodsDialogVisible: false,
+      showConfigDialogVisible: false,
       goodsDataList: [],
       // 数据总条数
       total: 0,
@@ -382,6 +444,7 @@ export default {
       if (res.code !== 200) {
         return this.$message.error(res.message);
       }
+      this.goodsName = ""
       this.goodsDataList = [];
       res.data.forEach((item) => {
         let obj = {};
@@ -416,6 +479,40 @@ export default {
           }
           this.$message.success("添加商品成功");
           this.insertGoodsDialogVisible = false;
+          this.getGoodsByUserId();
+          this.$refs.insertGoodsFormRef.resetFileds();
+        }
+      });
+    },
+
+    // 获取时间区间事件
+    timeChanged() {
+      this.configForm.startTime = this.timeRange[0];
+      this.configForm.endTime = this.timeRange[1];
+    },
+
+    // 显示物品竞拍配置对话框
+    showConfigDialog(id) {
+      this.showConfigDialogVisible = true;
+      this.configForm.goodsId = id;
+      this.timeRange = [new Date(), new Date()];
+    },
+
+    // 配置物品竞拍信息
+    configGoods() {
+      this.$refs.configFormRef.validate(async (valid) => {
+        if (valid) {
+          const { data: res } = await this.$http.request({
+            url: "front/Config/addConfig",
+            method: "post",
+            data: this.configForm,
+          });
+          if (res.code !== 200) {
+            return this.$message.erroe(res.message);
+          }
+          this.$message.success("竞拍配置成功");
+          this.showConfigDialogVisible = false;
+          this.$refs.configFormRef.resetFileds();
         }
       });
     },

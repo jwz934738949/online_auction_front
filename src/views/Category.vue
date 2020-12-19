@@ -25,7 +25,7 @@
       </el-input>
     </div>
     <div class="main_content">
-      <div class="goods_item" v-for="item in goodsList" :key="item.id">
+      <div class="goods_item" v-for="(item, index) in goodsList" :key="item.id">
         <div class="img_wrap">
           <img :src="item.image" alt="" />
         </div>
@@ -34,6 +34,9 @@
           <div class="name_content">
             <span class="name">{{ item.name }}</span>
             <span class="remark">{{ item.remark }}</span>
+            <el-button type="text" @click="toDetail(index)"
+              >查看详细 >>
+            </el-button>
           </div>
         </div>
       </div>
@@ -198,6 +201,13 @@ export default {
         this.getCategory();
       }
     },
+
+    // 进入竞拍详情界面
+    toDetail(index) {
+      let id = this.goodsList[index].id;
+      window.sessionStorage.setItem("goodsId", id);
+      this.$router.push("/goodsDetail");
+    },
   },
 };
 </script>
@@ -261,12 +271,24 @@ export default {
         margin-left: 10px;
         display: flex;
         flex-direction: column;
+
+        .name {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
         .remark {
           font-size: 15px;
           color: #666;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+        }
+
+        .el-button {
+          margin-top: -10px;
+          text-align: left;
         }
       }
     }

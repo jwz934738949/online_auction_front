@@ -27,6 +27,8 @@ import { Table } from "element-ui";
 import { TableColumn } from "element-ui";
 import { Pagination } from "element-ui";
 import { Tag } from "element-ui";
+import { Breadcrumb, BreadcrumbItem } from "element-ui";
+import { Drawer } from "element-ui";
 
 Vue.prototype.$message = Message;
 
@@ -57,3 +59,6 @@ Vue.use(Table);
 Vue.use(TableColumn);
 Vue.use(Pagination);
 Vue.use(Tag);
+Vue.use(Breadcrumb);
+Vue.use(BreadcrumbItem);
+Vue.use(Drawer);

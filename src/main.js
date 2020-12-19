@@ -5,6 +5,7 @@ import "./plugins/element.js";
 import axios from "axios";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+import "./assets/css/iconfont.css";
 
 Vue.config.productionTip = false;
 

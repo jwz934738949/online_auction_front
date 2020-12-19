@@ -3,12 +3,12 @@
     <div class="img_wrap">
       <img :src="goodsList.image" alt="" />
     </div>
-
     <div class="goods_content">
       <div class="price_name">￥{{ goodsList.auctionPrice }}</div>
       <div class="name_content">
         <span class="name">{{ goodsList.name }}</span>
         <span class="remark">{{ goodsList.remark }}</span>
+        <el-button type="text" @click="toDetail">查看详细 >> </el-button>
       </div>
     </div>
   </div>
@@ -20,6 +20,14 @@ export default {
     goodsList: {
       type: Object,
       default() {},
+    },
+  },
+  methods: {
+    // 进入竞拍详情界面
+    toDetail() {
+      let id = this.goodsList.id;
+      window.sessionStorage.setItem("goodsId", id);
+      this.$router.push("/goodsDetail");
     },
   },
 };
@@ -39,7 +47,7 @@ export default {
 
   .img_wrap {
     text-align: center;
-    margin: 10px;
+    margin: 7px;
     img {
       box-shadow: 0 0 2px #000;
       width: 100px;
@@ -63,12 +71,24 @@ export default {
       margin-left: 10px;
       display: flex;
       flex-direction: column;
+
+      .name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
       .remark {
         font-size: 15px;
         color: #666;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+      }
+
+      .el-button {
+        margin-top: -10px;
+        text-align: left;
       }
     }
   }

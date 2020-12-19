@@ -99,7 +99,7 @@ export default {
 
     // 退出登录
     logout() {
-      window.sessionStorage.clear();
+      window.sessionStorage.removeItem("token");
       this.$router.go(0);
     },
   },
