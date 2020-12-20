@@ -63,7 +63,7 @@ export default {
         { title: "首页", index: "/main" },
         { title: "分类", index: "/category" },
         { title: "商品管理", index: "/goods" },
-        { title: "1234", index: "/m123" },
+        { title: "订单管理", index: "/order" },
       ],
     };
   },
