@@ -81,7 +81,9 @@ export default {
       // 用户头像
       avatarUrl: "",
       // 用户竞拍信息数组
-      auctionUserList: []
+      auctionUserList: [],
+      // 竞拍间隔
+      priceGrad: 0
     };
   },
   created() {
@@ -103,12 +105,13 @@ export default {
           id,
         },
       });
-      console.log(res)
       if (res.code !== 200) {
         return this.$message.error(res.message);
       }
-      if (res.data[1].length !== 0) {
-        this.price = res.data[1][0].price
+      this.priceGrad = res.data[0].priceGrad;
+      this.price = res.data[0].auctionPrice;
+      if (res.data[1][0].price > this.price) {
+        this.price = res.data[1][0].price;
       }
       this.auctionId = res.data[0].auctionId;
       this.detailInfoList = res.data[0];
@@ -120,6 +123,7 @@ export default {
       if (startTime - new Date() > 0) {
         //当前日期早于竞拍日期
         this.auctionTime = "竞拍未开始";
+        this.btnAbled = true;
       } else {
         //当前日期晚于竞拍开始日期
         let timer = setInterval(() => {
@@ -130,6 +134,7 @@ export default {
           );
           if (this.auctionTime === "竞拍已结束") {
             clearInterval(timer);
+            this.btnAbled = true;
           }
         }, 1000);
       }
@@ -246,7 +251,7 @@ export default {
 
     // 上传竞拍价格
     auctionWebSocket() {
-      this.price += 20500;
+      this.price += this.priceGrad;
       let vipUserId = Number(window.sessionStorage.getItem("vipId"));
       let data = {
         type: 1,

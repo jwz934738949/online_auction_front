@@ -29,6 +29,7 @@ import { Pagination } from "element-ui";
 import { Tag } from "element-ui";
 import { Breadcrumb, BreadcrumbItem } from "element-ui";
 import { Drawer } from "element-ui";
+import { RadioGroup, RadioButton } from "element-ui";
 
 Vue.prototype.$message = Message;
 
@@ -62,3 +63,5 @@ Vue.use(Tag);
 Vue.use(Breadcrumb);
 Vue.use(BreadcrumbItem);
 Vue.use(Drawer);
+Vue.use(RadioGroup);
+Vue.use(RadioButton );
