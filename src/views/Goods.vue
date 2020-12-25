@@ -4,36 +4,37 @@
     <el-row type="flex" justify="center" align="center">
       <el-col :span="4">
         <el-button
-            type="text"
-            icon="el-icon-circle-plus"
-            @click="insertGoodsDialogVisible = true"
+          type="text"
+          icon="el-icon-circle-plus"
+          @click="insertGoodsDialogVisible = true"
         >物品上传
         </el-button
         >
         <!-- 物品上传对话框 -->
         <el-dialog
-            title="物品上传"
-            :visible.sync="insertGoodsDialogVisible"
-            width="45%"
+          title="物品上传"
+          :visible.sync="insertGoodsDialogVisible"
+          width="45%"
         >
           <el-form
-              :model="goodsForm"
-              :rules="goodsRules"
-              ref="insertGoodsFormRef"
-              label-width="100px"
+            :model="goodsForm"
+            :rules="goodsRules"
+            ref="insertGoodsFormRef"
+            label-width="100px"
           >
             <el-form-item label="商品图片">
               <el-upload
-                  class="avatar-uploader"
-                  action="http://auction.redarm.cn/api/front/goods/image"
-                  :limit="1"
-                  accept=".png, .jpg"
-                  :on-success="handleAvatarSuccess"
+                class="avatar-uploader"
+                action="http://auction.redarm.cn/api/front/goods/image"
+                :limit="1"
+                accept=".png, .jpg"
+                ref="uploadRef"
+                :on-success="handleAvatarSuccess"
               >
                 <img
-                    v-if="goodsForm.image"
-                    :src="goodsForm.image"
-                    class="avatar"
+                  v-if="goodsForm.image"
+                  :src="goodsForm.image"
+                  class="avatar"
                 />
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
@@ -43,29 +44,29 @@
             </el-form-item>
             <el-form-item label="竞拍起价￥" prop="auctionPrice">
               <el-input
-                  v-model="goodsForm.auctionPrice"
-                  type="number"
+                v-model="goodsForm.auctionPrice"
+                type="number"
               ></el-input>
             </el-form-item>
             <el-form-item label="商品描述">
               <el-input
-                  type="textarea"
-                  :rows="2"
-                  :autosize="{ maxRows: 4 }"
-                  placeholder="请输入描述内容"
-                  :show-word-limit="true"
-                  clearable
-                  v-model="goodsForm.remark"
+                type="textarea"
+                :rows="2"
+                :autosize="{ maxRows: 4 }"
+                placeholder="请输入描述内容"
+                :show-word-limit="true"
+                clearable
+                v-model="goodsForm.remark"
               >
               </el-input>
             </el-form-item>
             <el-form-item label="商品类别" prop="goodsSecondTypeId">
               <el-cascader
-                  v-model="value"
-                  :options="options"
-                  :props="{ expandTrigger: 'hover' }"
-                  clearable
-                  @change="getGoodsSecondTypeId"
+                v-model="value"
+                :options="options"
+                :props="{ expandTrigger: 'hover' }"
+                clearable
+                @change="getGoodsSecondTypeId"
               ></el-cascader>
             </el-form-item>
           </el-form>
@@ -80,23 +81,23 @@
     </el-row>
     <!-- 显示查询表单 -->
     <el-row
-        type="flex"
-        justify="center"
-        align="center"
-        :gutter="10"
-        style="margin: 5px 0;"
+      type="flex"
+      justify="center"
+      align="center"
+      :gutter="10"
+      style="margin: 5px 0;"
     >
       <el-col :span="6">
         <el-input v-model="goodsName" placeholder="请输入商品名称"></el-input>
       </el-col>
       <el-col :span="4">
         <el-cascader
-            v-model="valueSelect"
-            :options="options"
-            :props="{ expandTrigger: 'hover' }"
-            @change="getGoodsSecondTypeId"
-            clearable
-            placeholder="请选择要查询的分类"
+          v-model="valueSelect"
+          :options="options"
+          :props="{ expandTrigger: 'hover' }"
+          @change="getGoodsSecondTypeId"
+          clearable
+          placeholder="请选择要查询的分类"
         ></el-cascader>
       </el-col>
       <el-col :span="2">
@@ -120,10 +121,10 @@
         </template>
       </el-table-column>
       <el-table-column
-          prop="remark"
-          label="商品描述"
-          width="200"
-          show-overflow-tooltip
+        prop="remark"
+        label="商品描述"
+        width="200"
+        show-overflow-tooltip
       >
       </el-table-column>
       <el-table-column prop="createTime" label="创建时间" width="250" sortable>
@@ -131,36 +132,36 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button
-              type="info"
-              size="small"
-              @click="showConfigDialog(scope.row.id)"
+            type="info"
+            size="small"
+            @click="showConfigDialog(scope.row.id)"
           >竞拍配置
           </el-button
           >
           <el-dialog
-              title="物品竞拍配置"
-              :visible.sync="showConfigDialogVisible"
-              width="45%"
+            title="物品竞拍配置"
+            :visible.sync="showConfigDialogVisible"
+            width="45%"
           >
             <el-form
-                :model="configForm"
-                :rules="configFormRules"
-                ref="configFormRef"
-                label-width="100px"
+              :model="configForm"
+              :rules="configFormRules"
+              ref="configFormRef"
+              label-width="100px"
             >
               <el-form-item label="起拍金额" prop="bond">
                 <el-input type="number" v-model="configForm.bond"></el-input>
               </el-form-item>
               <el-form-item label="竞拍时间">
                 <el-date-picker
-                    v-model="timeRange"
-                    type="datetimerange"
-                    range-separator="至"
-                    start-placeholder="开始时间"
-                    end-placeholder="结束时间"
-                    align="right"
-                    value-format="yyyy-MM-dd HH:mm:ss"
-                    @blur="timeChanged"
+                  v-model="timeRange"
+                  type="datetimerange"
+                  range-separator="至"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
+                  align="right"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  @blur="timeChanged"
                 >
                 </el-date-picker>
               </el-form-item>
@@ -176,100 +177,100 @@
             </span>
           </el-dialog>
           <el-button
-              size="small"
-              @click="showOrderByGoodsId(scope.row.id)"
+            size="small"
+            @click="showOrderByGoodsId(scope.row.id)"
           >查看订单
           </el-button>
           <el-dialog
-              title="物品订单数据"
-              :visible.sync="showOrderDialogVisible"
-              width="90%"
+            title="物品订单数据"
+            :visible.sync="showOrderDialogVisible"
+            width="90%"
           >
             <!--    订单表格数据-->
             <el-table
-                :data="tableData"
-                stripe
-                style="width: 100%">
+              :data="tableData"
+              stripe
+              style="width: 100%">
               <el-table-column
-                  type="index"
-                  width="70">
+                type="index"
+                width="70">
               </el-table-column>
               <el-table-column
-                  prop="image"
-                  label="商品图片"
-                  width="150">
+                prop="image"
+                label="商品图片"
+                width="150">
                 <template slot-scope="scope">
                   <img :src="scope.row.image" alt="" width="50" height="50">
                 </template>
               </el-table-column>
               <el-table-column
-                  prop="name"
-                  label="商品名称"
-                  width="170"
-                  show-overflow-tooltip>
+                prop="name"
+                label="商品名称"
+                width="170"
+                show-overflow-tooltip>
               </el-table-column>
               <el-table-column
-                  prop="cateType"
-                  label="商品分类"
-                  width="200">
+                prop="cateType"
+                label="商品分类"
+                width="200">
                 <template slot-scope="scope">
                   <el-tag type="success">{{ scope.row.cateType }}</el-tag>
                 </template>
               </el-table-column>
               <el-table-column
-                  prop="bond"
-                  label="保证金"
-                  width="150">
+                prop="bond"
+                label="保证金"
+                width="150">
               </el-table-column>
               <el-table-column
-                  prop="price"
-                  label="成交金额"
-                  width="150">
+                prop="price"
+                label="成交金额"
+                width="150">
               </el-table-column>
               <el-table-column
-                  prop="fromname"
-                  label="卖家"
-                  width="150">
+                prop="fromname"
+                label="卖家"
+                width="150">
               </el-table-column>
               <el-table-column
-                  prop="toname"
-                  label="买家"
-                  width="200">
+                prop="toname"
+                label="买家"
+                width="200">
               </el-table-column>
             </el-table>
           </el-dialog>
           <el-button
-              type="primary"
-              round
-              icon="el-icon-edit"
-              size="small"
-              @click="showUpdateGoodsDialog(scope.row)"
+            type="primary"
+            round
+            icon="el-icon-edit"
+            size="small"
+            @click="showUpdateGoodsDialog(scope.row)"
           >修改
           </el-button
           >
           <el-dialog
-              title="物品修改"
-              :visible.sync="updateGoodsDialogVisible"
-              width="45%"
+            title="物品修改"
+            :visible.sync="updateGoodsDialogVisible"
+            width="45%"
           >
             <el-form
-                :model="goodsForm"
-                :rules="goodsRules"
-                ref="insertGoodsFormRef"
-                label-width="100px"
+              :model="goodsForm"
+              :rules="goodsRules"
+              ref="insertGoodsFormRef"
+              label-width="100px"
             >
               <el-form-item label="商品图片">
                 <el-upload
-                    class="avatar-uploader"
-                    action="http://auction.redarm.cn/api/front/goods/image"
-                    :limit="1"
-                    accept=".png, .jpg"
-                    :on-success="handleAvatarSuccess"
+                  class="avatar-uploader"
+                  action="http://auction.redarm.cn/api/front/goods/image"
+                  :limit="1"
+                  accept=".png, .jpg"
+                  :on-success="handleAvatarSuccess"
                 >
                   <img
-                      v-if="goodsForm.image"
-                      :src="goodsForm.image"
-                      class="avatar"
+                    v-if="goodsForm.image"
+                    :src="goodsForm.image"
+                    class="avatar"
                   />
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
@@ -279,29 +280,29 @@
               </el-form-item>
               <el-form-item label="竞拍起价￥" prop="auctionPrice">
                 <el-input
-                    v-model="goodsForm.auctionPrice"
-                    type="number"
+                  v-model="goodsForm.auctionPrice"
+                  type="number"
                 ></el-input>
               </el-form-item>
               <el-form-item label="商品描述">
                 <el-input
-                    type="textarea"
-                    :rows="2"
-                    :autosize="{ maxRows: 4 }"
-                    placeholder="请输入描述内容"
-                    :show-word-limit="true"
-                    clearable
-                    v-model="goodsForm.remark"
+                  type="textarea"
+                  :rows="2"
+                  :autosize="{ maxRows: 4 }"
+                  placeholder="请输入描述内容"
+                  :show-word-limit="true"
+                  clearable
+                  v-model="goodsForm.remark"
                 >
                 </el-input>
               </el-form-item>
               <el-form-item label="商品类别" prop="goodsSecondTypeId">
                 <el-cascader
-                    v-model="value"
-                    :options="options"
-                    :props="{ expandTrigger: 'hover' }"
-                    clearable
-                    @change="getGoodsSecondTypeId"
+                  v-model="value"
+                  :options="options"
+                  :props="{ expandTrigger: 'hover' }"
+                  clearable
+                  @change="getGoodsSecondTypeId"
                 ></el-cascader>
               </el-form-item>
             </el-form>
@@ -313,18 +314,18 @@
             </span>
           </el-dialog>
           <el-button
-              type="danger"
-              round
-              icon="el-icon-delete"
-              size="small"
-              @click="deleteGoodsDialogVisible = true"
+            type="danger"
+            round
+            icon="el-icon-delete"
+            size="small"
+            @click="deleteGoodsDialogVisible = true"
           >删除
           </el-button
           >
           <el-dialog
-              title="物品删除"
-              :visible.sync="deleteGoodsDialogVisible"
-              width="45%"
+            title="物品删除"
+            :visible.sync="deleteGoodsDialogVisible"
+            width="45%"
           >
             <span>此操作将永久删除该文件, 是否继续?</span>
             <span slot="footer" class="dialog-footer">
@@ -342,10 +343,10 @@
     <!-- 分页功能 -->
     <div class="page_footer">
       <el-pagination
-          background
-          layout="prev, pager, next"
-          :total="total"
-          :page-size="10"
+        background
+        layout="prev, pager, next"
+        :total="total"
+        :page-size="10"
       >
       </el-pagination>
     </div>
@@ -546,6 +547,7 @@ export default {
     // 图片上传成功回调
     handleAvatarSuccess(file) {
       this.goodsForm.image = file.data.imageUrl;
+      this.$refs.uploadRef.clearFiles();
     },
 
     // 添加商品数据
@@ -562,8 +564,16 @@ export default {
           }
           this.$message.success("添加商品成功");
           this.insertGoodsDialogVisible = false;
-          this.getGoodsByUserId();
-          this.$refs.insertGoodsFormRef.resetFileds();
+          await this.getGoodsByUserId();
+          this.goodsForm = {
+            name: "",
+            image: "",
+            vipUserId: 0,
+            goodsSecondTypeId: 0,
+            auctionPrice: 0,
+            remark: "",
+            goodsId: 0,
+          }
         }
       });
     },
@@ -636,7 +646,7 @@ export default {
       }
       this.$message.success("物品修改成功");
       this.updateGoodsDialogVisible = false;
-      this.getGoodsByUserId();
+      await this.getGoodsByUserId();
     },
 
     // 删除物品数据
@@ -653,7 +663,7 @@ export default {
       }
       this.$message.success("删除成功");
       this.deleteGoodsDialogVisible = false;
-      this.getGoodsByUserId();
+      await this.getGoodsByUserId();
     },
 
     // 查看商品订单数据
@@ -668,7 +678,7 @@ export default {
       if (res.code !== 200) {
         return this.$message.error(res.message);
       }
-      if(res.data === null) {
+      if (res.data === null) {
         return this.$message.error("该物品没有进行竞拍")
       }
       this.tableData = [];
@@ -684,7 +694,6 @@ export default {
       this.tableData.push(obj);
       this.showOrderDialogVisible = true;
     },
-
 
 
     // 当前页码发生变化
