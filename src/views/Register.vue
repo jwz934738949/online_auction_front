@@ -178,7 +178,7 @@ export default {
     height: 100%;
     width: 100%;
     position: fixed;
-    background: url("../assets/background.png") no-repeat center center;
+    background: url("http://oss.gorld.cn/HS~K9(CZD_2)7%7B8ET7~4NCR.jpg") no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
     filter: blur(5px);

@@ -3,7 +3,7 @@
     <el-container>
       <el-header>
         <div class="header_wrap">
-          <img src="../assets/logo.png" alt="" />
+          <img src="http://oss.gorld.cn/1HPR31FLADVD1CO.jpg" alt="" />
           <h1>311网上竞拍系统</h1>
         </div>
         <div class="btn_group" v-if="!isLogin">

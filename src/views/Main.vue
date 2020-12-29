@@ -4,25 +4,25 @@
     <el-carousel height="450px" direction="vertical" autoplay loop>
       <el-carousel-item>
         <el-image
-          :src="require('../assets/carousel_img1.png')"
+          src="http://oss.gorld.cn/20181225.jpg"
           fit="fill"
         ></el-image>
       </el-carousel-item>
       <el-carousel-item>
         <el-image
-          :src="require('../assets/carousel_img2.png')"
+          src="http://oss.gorld.cn/R5LATjltFBFiaO.jpg"
           fit="fill"
         ></el-image>
       </el-carousel-item>
       <el-carousel-item>
         <el-image
-          :src="require('../assets/carousel_img3.png')"
+          src="http://oss.gorld.cn/2327989714191135897.jpg"
           fit="fill"
         ></el-image>
       </el-carousel-item>
       <el-carousel-item>
         <el-image
-          :src="require('../assets/carousel_img4.png')"
+          src="http://oss.gorld.cn/siz999910000.jpg"
           fit="fill"
         ></el-image>
       </el-carousel-item>
@@ -71,6 +71,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.el-image {
+  width: 1400px;
+  height: 450px;
+}
+
 .main_content {
   .title {
     border-left: 5px solid #ed1941;
