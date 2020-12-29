@@ -239,7 +239,7 @@ export default {
     height: 200px;
     display: flex;
     flex-direction: column;
-    background-color: #909399;
+    background-color: #84bf96;
     margin: 15px;
     padding: 20px;
     border-radius: 20px;

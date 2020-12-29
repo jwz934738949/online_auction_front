@@ -73,11 +73,11 @@ export default {
 <style lang="less" scoped>
 .main_content {
   .title {
-    text-align: center;
+    border-left: 5px solid #ed1941;
+    text-align: left;
     color: #000;
     font-size: 25px;
     padding: 10px;
-    border-bottom: 2px dashed blue;
   }
 }
 </style>
